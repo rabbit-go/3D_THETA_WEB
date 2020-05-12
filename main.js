@@ -134,7 +134,7 @@ if ('ontouchstart' in window) {
    // camera.position.y = 100 * Math.cos( phi );
    // camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
    camera.position.x = 1000;
-    camera.lookAt( scene.position );
+    camera.lookAt( mesh.position );
     renderer.render( scene, camera );
     mesh.rotation.y += 0.01;
   }
