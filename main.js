@@ -130,9 +130,10 @@ if ('ontouchstart' in window) {
     lat = Math.max( - 85, Math.min( 85, lat ) );
     phi = THREE.Math.degToRad( 90 - lat );
     theta = THREE.Math.degToRad( lon );
-    camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
-    camera.position.y = 100 * Math.cos( phi );
-    camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+   // camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
+   // camera.position.y = 100 * Math.cos( phi );
+   // camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+   camera.position.x = 1000;
     camera.lookAt( scene.position );
     renderer.render( scene, camera );
     mesh.rotation.y += 0.01;
