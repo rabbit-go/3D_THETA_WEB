@@ -63,7 +63,7 @@ if ('ontouchstart' in window) {
     
     // 球体を作成し、テクスチャに video を元にして生成したテクスチャを設定します
     var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
-    geometry.scale( 1, 1, 1 );
+    geometry.scale( - 1, 1, 1 );
     mesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
     scene.add( mesh );
 
@@ -130,17 +130,13 @@ if ('ontouchstart' in window) {
     lat = Math.max( - 85, Math.min( 85, lat ) );
     phi = THREE.Math.degToRad( 90 - lat );
     theta = THREE.Math.degToRad( lon );
-     // 角度に応じてカメラの位置を設定
-     camera.position.x = 1000 * Math.sin(3.14);
-     camera.position.z = 1000 * Math.cos(3.14);
-     // 原点方向を見つめる
-     camera.lookAt(new THREE.Vector3(0, 0, 0));
-     // 地球は常に回転させておく
-     mesh.rotation.y += 0.01;
+    camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
+    camera.position.y = 100 * Math.cos( phi );
+    camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
    
     camera.lookAt( mesh.position );
     renderer.render( scene, camera );
-
+    mesh.rotation.y += 0.01;
   }
 
 })();
