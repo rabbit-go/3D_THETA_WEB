@@ -63,7 +63,7 @@ if ('ontouchstart' in window) {
     
     // 球体を作成し、テクスチャに video を元にして生成したテクスチャを設定します
     var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
-    geometry.scale( - 1, 1, 1 );
+    geometry.scale( 1, 1, 1 );
     mesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
     scene.add( mesh );
 
@@ -127,16 +127,16 @@ if ('ontouchstart' in window) {
     renderer.setAnimationLoop( render );
   }
   function render() {
-    lat = Math.max( - 85, Math.min( 85, lat ) );
-    phi = THREE.Math.degToRad( 90 - lat );
-    theta = THREE.Math.degToRad( lon );
-   // camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
-   // camera.position.y = 100 * Math.cos( phi );
-   // camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
-   camera.position.x = 1000;
-    camera.lookAt( mesh.position );
-    renderer.render( scene, camera );
-    mesh.rotation.y += 0.01;
+          // ラジアンに変換する
+          const radian = (rot * Math.PI) / 180;
+         
+          // 地球は常に回転させておく
+          earthMesh.rotation.y += 0.01;
+
+          // レンダリング
+          renderer.render(scene, camera);
+
+          requestAnimationFrame(tick);
   }
 
 })();
