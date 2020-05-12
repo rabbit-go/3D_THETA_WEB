@@ -130,13 +130,23 @@ if ('ontouchstart' in window) {
     lat = Math.max( - 85, Math.min( 85, lat ) );
     phi = THREE.Math.degToRad( 90 - lat );
     theta = THREE.Math.degToRad( lon );
-    camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
-    camera.position.y = 100 * Math.cos( phi );
-    camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
-   
-    camera.lookAt( mesh.position );
-    renderer.render( scene, camera );
+    // ラジアンに変換する
+    const radian = (rot * Math.PI) / 180;
+    // 角度に応じてカメラの位置を設定
+    camera.position.x = 1000 * Math.sin(radian);
+    camera.position.z = 1000 * Math.cos(radian);
+        
+    
+    // 地球は常に回転させておく
     mesh.rotation.y += 0.01;
+   
+    // 原点方向を見つめる
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    renderer.render( scene, camera );
+
+
+
+
   }
 
 })();
