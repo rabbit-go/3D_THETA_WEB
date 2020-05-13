@@ -16,6 +16,8 @@ if ('ontouchstart' in window) {
 
   // 変数の初期化
   var camera, scene, renderer, video, texture, container,mesh;
+  const width = 300;
+  const height = 100;
   var fov = 60,
   isUserInteracting = false,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -56,7 +58,7 @@ if ('ontouchstart' in window) {
     }, 1000 / 24 );
 
     // カメラを生成
-    camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
+    camera = new THREE.PerspectiveCamera( 75, width / height, 1, 2000 );
 
     // シーンを生成
     scene = new THREE.Scene();
@@ -70,7 +72,7 @@ if ('ontouchstart' in window) {
     // レンダラーを生成
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( width, height );
     container.appendChild( renderer.domElement );
 
     // ドラッグ・スワイプ操作を設定
@@ -81,9 +83,9 @@ if ('ontouchstart' in window) {
     onWindowResize( null );
   }
   function onWindowResize ( event ) {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( width, height );
   }
 
   function onDocumentMouseDown( event ) {
@@ -155,8 +157,8 @@ window.addEventListener('resize', onResize);
 
 function onResize() {
   // サイズを取得
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  const width = width;
+  const height = height;
 
   // レンダラーのサイズを調整する
   renderer.setPixelRatio(window.devicePixelRatio);
