@@ -1,28 +1,98 @@
-<!DOCTYPE HTML>
-<html lang="ja-JP">
-<head>
-<meta charset="utf-8">
-<link rel=stylesheet type="text/css" href="style.css">
-<title>Three.jsで360度パノラマの動画を表示</title>
-</head>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script>
+      // ページの読み込みを待つ
+      window.addEventListener('load', init);
 
-<body>
-<header>
-    <h1>Three.jsで360度パノラマの動画を表示</h1>
-</header>
-<main>
-    <div class="wrapper">
-        <section>
-            <div>
-                <div class="canvas-frame-wrapper">
-                    <div id="canvas-frame"></div>
-                </div>
-            </div>
-        </section>
-    </div>
-</main>
-<script src="js/three.min.js"></script>
-<script src="main.js"></script>
-</body>
+      function init() {
+        // サイズを指定
+        const width = 960;
+        const height = 540;
+        let rot = 0;
 
+        // レンダラーを作成
+        const renderer = new THREE.WebGLRenderer({
+          canvas: document.querySelector('#myCanvas')
+        });
+        renderer.setSize(width, height);
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+
+        // 平行光源を作成
+        const directionalLight = new THREE.DirectionalLight(0xffffff);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        // マテリアルを作成
+        const material  = new THREE.MeshBasicMaterial({
+          map: createVideoTexture(createVideo('textures/video4.mp4'))
+        });
+
+        // 球体の形状を作成します
+        const geometry = new THREE.SphereGeometry(300, 30, 30);
+        // 形状とマテリアルからメッシュを作成します
+        const earthMesh = new THREE.Mesh(geometry, material);
+        // シーンにメッシュを追加します
+        scene.add(earthMesh);
+
+        }
+
+        tick();
+
+        // 毎フレーム時に実行されるループイベントです
+        function tick() {
+          rot += 0.5; // 毎フレーム角度を0.5度ずつ足していく
+          // ラジアンに変換する
+          const radian = (rot * Math.PI) / 180;
+          // 角度に応じてカメラの位置を設定
+          camera.position.x = 1000 * Math.sin(radian);
+          camera.position.z = 1000 * Math.cos(radian);
+          // 原点方向を見つめる
+          camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+          // レンダリング
+          renderer.render(scene, camera);
+
+          requestAnimationFrame(tick);
+        }
+      }
+      function createVideo(src){
+     // video 要素を生成
+     const video = document.createElement( 'video' );
+     video.crossOrigin = 'anonymous';
+     video.loop = true;
+     video.muted = true;
+     video.src = src;
+     video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
+     video.setAttribute( 'playsinline', 'playsinline' );
+     video.setAttribute( 'muted', 'muted' );
+     video.play();
+     return video;
+  }
+  function createVideoTexture(video){
+        // video からテクスチャを生成
+        const texture = new THREE.Texture( video );
+        texture.generateMipmaps = false;
+        texture.minFilter = THREE.NearestFilter;
+        texture.maxFilter = THREE.NearestFilter;
+        texture.format = THREE.RGBFormat;
+        // 動画に合わせてテクスチャを更新
+        setInterval( function () {
+          if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
+            texture.needsUpdate = true;
+          }
+        }, 1000 / 60 );
+        return texture;
+  }
+    </script>
+  </head>
+  <body>
+    <canvas id="myCanvas"></canvas>
+  </body>
 </html>
