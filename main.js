@@ -58,7 +58,7 @@ if ('ontouchstart' in window) {
     // ドラッグ・スワイプ操作を設定
     container.addEventListener( EVENT.TOUCH_START, onDocumentMouseDown, false );
     window.addEventListener(EVENT.TOUCH_MOVE, onMouseMove, false );
-    window.addEventListener(contextmenu, onMouseRightClick, false );
+    window.addEventListener('contextmenu', onMouseRightClick, false );
     // 画面のリサイズに対応
     window.addEventListener( 'resize', onWindowResize, false );
     onWindowResize( null );
