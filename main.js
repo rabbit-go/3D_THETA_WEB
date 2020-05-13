@@ -141,7 +141,7 @@ if ('ontouchstart' in window) {
     mesh.rotation.y += 0.01;
    
     // 原点方向を見つめる
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    camera.lookAt(mesh.position);
     renderer.render( scene, camera );
 
 
