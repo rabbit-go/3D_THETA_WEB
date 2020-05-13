@@ -31,8 +31,28 @@ if ('ontouchstart' in window) {
 
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
-    
-    const video = createVideo('textures/video4.mp4');
+    // video 要素を生成
+    const video = document.createElement( 'video' );
+    video.crossOrigin = 'anonymous';
+    video.loop = true;
+    video.muted = true;
+    video.src = 'textures/video4.mp4';
+    video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
+    video.setAttribute( 'playsinline', 'playsinline' );
+    video.setAttribute( 'muted', 'muted' );
+    video.play();
+    // video からテクスチャを生成
+    const texture = new THREE.Texture( video );
+    texture.generateMipmaps = false;
+    texture.minFilter = THREE.NearestFilter;
+    texture.maxFilter = THREE.NearestFilter;
+    texture.format = THREE.RGBFormat;
+    // 動画に合わせてテクスチャを更新
+    setInterval( function () {
+      if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
+        texture.needsUpdate = true;
+      }
+    }, 1000 / 60 );
     const texture = createVideoTexture(video);
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
