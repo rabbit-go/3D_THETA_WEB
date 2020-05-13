@@ -131,7 +131,7 @@ if ('ontouchstart' in window) {
     phi = THREE.Math.degToRad( 90 - lat );
     theta = THREE.Math.degToRad( lon );
     // ラジアンに変換する
-    const radian = (rot * Math.PI) / 180;
+    const radian = (10 * Math.PI) / 180;
     // 角度に応じてカメラの位置を設定
     camera.position.x = 1000 * Math.sin(radian);
     camera.position.z = 1000 * Math.cos(radian);
