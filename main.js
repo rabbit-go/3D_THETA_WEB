@@ -32,17 +32,7 @@ if ('ontouchstart' in window) {
 
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
-    
-    // video 要素を生成
-    video = document.createElement( 'video' );
-    video.crossOrigin = 'anonymous';
-    video.loop = true;
-    video.muted = true;
-    video.src = 'textures/video4.mp4';
-    video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-    video.setAttribute( 'playsinline', 'playsinline' );
-    video.setAttribute( 'muted', 'muted' );
-    video.play();
+    video = createVideo ('textures/video4.mp4');
 
     // video からテクスチャを生成
     texture = new THREE.Texture( video );
@@ -81,6 +71,21 @@ if ('ontouchstart' in window) {
     // 画面のリサイズに対応
     window.addEventListener( 'resize', onWindowResize, false );
     onWindowResize( null );
+  }
+  function createVideo (src) {
+        // video 要素を生成
+        const local_video = document.createElement( 'video' );
+        local_video.crossOrigin = 'anonymous';
+        local_video.loop = true;
+        local_video.muted = true;
+        local_video.src = src;
+        local_video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
+        local_video.setAttribute( 'playsinline', 'playsinline' );
+        local_video.setAttribute( 'muted', 'muted' );
+        local_video.play();
+        return local_video;
+  }
+  function createVideoTexture ( event ) {
   }
   function onWindowResize ( event ) {
     camera.aspect = width / height;
