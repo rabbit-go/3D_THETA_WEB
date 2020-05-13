@@ -53,7 +53,6 @@ if ('ontouchstart' in window) {
         texture.needsUpdate = true;
       }
     }, 1000 / 60 );
-    const texture = createVideoTexture(video);
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
     // シーンを生成
