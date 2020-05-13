@@ -15,7 +15,8 @@ if ('ontouchstart' in window) {
 (function () {
 
   // 変数の初期化
-  var camera, scene, renderer, video, texture, container,mesh;
+  var camera, scene, renderer,  container,mesh;
+  var radian ;
   var fov = 60,
   isUserInteracting = false,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -31,33 +32,10 @@ if ('ontouchstart' in window) {
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
     
-    // video 要素を生成
-    video = document.createElement( 'video' );
-    video.crossOrigin = 'anonymous';
-    video.loop = true;
-    video.muted = true;
-    video.src = 'textures/video4.mp4';
-    video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-    video.setAttribute( 'playsinline', 'playsinline' );
-    video.setAttribute( 'muted', 'muted' );
-    video.play();
-
-    // video からテクスチャを生成
-    texture = new THREE.Texture( video );
-    texture.generateMipmaps = false;
-    texture.minFilter = THREE.NearestFilter;
-    texture.maxFilter = THREE.NearestFilter;
-    texture.format = THREE.RGBFormat;
-    // 動画に合わせてテクスチャを更新
-    setInterval( function () {
-      if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
-        texture.needsUpdate = true;
-      }
-    }, 1000 / 24 );
-
+    const video = createVideo('textures/video4.mp4');
+    const texture = createVideoTexture('textures/video4.mp4');
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
-
     // シーンを生成
     scene = new THREE.Scene();
     
@@ -75,15 +53,34 @@ if ('ontouchstart' in window) {
 
     // ドラッグ・スワイプ操作を設定
     container.addEventListener( EVENT.TOUCH_START, onDocumentMouseDown, false );
-
-    // 画面のリサイズに対応
-    window.addEventListener( 'resize', onWindowResize, false );
-    onWindowResize( null );
   }
-  function onWindowResize ( event ) {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+  function createVideo(src){
+     // video 要素を生成
+     video = document.createElement( 'video' );
+     video.crossOrigin = 'anonymous';
+     video.loop = true;
+     video.muted = true;
+     video.src = src;
+     video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
+     video.setAttribute( 'playsinline', 'playsinline' );
+     video.setAttribute( 'muted', 'muted' );
+     video.play();
+     return video;
+  }
+  function createVideoTexture(video){
+        // video からテクスチャを生成
+        texture = new THREE.Texture( video );
+        texture.generateMipmaps = false;
+        texture.minFilter = THREE.NearestFilter;
+        texture.maxFilter = THREE.NearestFilter;
+        texture.format = THREE.RGBFormat;
+        // 動画に合わせてテクスチャを更新
+        setInterval( function () {
+          if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
+            texture.needsUpdate = true;
+          }
+        }, 1000 / 60 );
+        return texture;
   }
 
   function onDocumentMouseDown( event ) {
@@ -131,22 +128,19 @@ if ('ontouchstart' in window) {
     phi = THREE.Math.degToRad( 90 - lat );
     theta = THREE.Math.degToRad( lon );
     // ラジアンに変換する
-    const radian = (10 * Math.PI) / 180;
+    radian = (10 * Math.PI) / 180;
     // 角度に応じてカメラの位置を設定
     camera.position.x = 1000 * Math.sin(radian);
     camera.position.z = 1000 * Math.cos(radian);
         
     
     // 地球は常に回転させておく
-    mesh.rotation.y += 0.01;
+    mesh.rotation.x = phi;
+    mesh.rotation.y = theta;
    
     // 原点方向を見つめる
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     renderer.render( scene, camera );
-
-
-
-
   }
 
 })();
