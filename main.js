@@ -33,7 +33,7 @@ if ('ontouchstart' in window) {
     container = document.getElementById( 'canvas-frame' );
     
     const video = createVideo('textures/video4.mp4');
-    const texture = createVideoTexture('textures/video4.mp4');
+    const texture = createVideoTexture(video);
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
     // シーンを生成
