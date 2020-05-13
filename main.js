@@ -33,20 +33,8 @@ if ('ontouchstart' in window) {
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
     video = createVideo ('textures/video4.mp4');
-
-    // video からテクスチャを生成
-    texture = new THREE.Texture( video );
-    texture.generateMipmaps = false;
-    texture.minFilter = THREE.NearestFilter;
-    texture.maxFilter = THREE.NearestFilter;
-    texture.format = THREE.RGBFormat;
-    // 動画に合わせてテクスチャを更新
-    setInterval( function () {
-      if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
-        texture.needsUpdate = true;
-      }
-    }, 1000 / 24 );
-
+    texture = createVideoTexture(video);
+    
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, width / height, 1, 2000 );
 
@@ -85,7 +73,20 @@ if ('ontouchstart' in window) {
         local_video.play();
         return local_video;
   }
-  function createVideoTexture ( event ) {
+  function createVideoTexture ( local_video ) {
+        // video からテクスチャを生成
+        const local_texture = new THREE.Texture( local_video );
+        local_texture.generateMipmaps = false;
+        local_texture.minFilter = THREE.NearestFilter;
+        local_texture.maxFilter = THREE.NearestFilter;
+        local_texture.format = THREE.RGBFormat;
+        // 動画に合わせてテクスチャを更新
+        setInterval( function () {
+          if ( local_video.readyState >= local_video.HAVE_CURRENT_DATA ) {
+            local_texture.needsUpdate = true;
+          }
+        }, 1000 / 60 );
+        return local_texture;
   }
   function onWindowResize ( event ) {
     camera.aspect = width / height;
