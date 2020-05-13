@@ -16,8 +16,8 @@ if ('ontouchstart' in window) {
 
   // 変数の初期化
   var camera, scene, renderer, video, texture, container,mesh;
-  const width = 300;
-  const height = 100;
+  const width = 400;
+  const height = 200;
   var fov = 60,
   isUserInteracting = false,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
