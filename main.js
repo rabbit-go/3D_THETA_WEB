@@ -56,7 +56,7 @@ if ('ontouchstart' in window) {
   }
   function createVideo(src){
      // video 要素を生成
-     video = document.createElement( 'video' );
+     const video = document.createElement( 'video' );
      video.crossOrigin = 'anonymous';
      video.loop = true;
      video.muted = true;
