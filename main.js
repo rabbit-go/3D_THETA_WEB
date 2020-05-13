@@ -69,7 +69,7 @@ if ('ontouchstart' in window) {
   }
   function createVideoTexture(video){
         // video からテクスチャを生成
-        texture = new THREE.Texture( video );
+        const texture = new THREE.Texture( video );
         texture.generateMipmaps = false;
         texture.minFilter = THREE.NearestFilter;
         texture.maxFilter = THREE.NearestFilter;
