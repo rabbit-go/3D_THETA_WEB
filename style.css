@@ -117,26 +117,5 @@ select {
 
 
 
-@media only screen and (max-width: 959px) {
 
-html, body {
-    font-size: 10px;
-}
-header {
-    padding: 15px 15px 0;
-}
-main {
-    width: 100%;
-    margin-top: 0;
-    padding: 15px;
-}
-section h2 {
-    padding-top: 10px;
-    margin-bottom: 10px;
-}
-.canvas-frame-wrapper {
-    padding-bottom: 100%;
-}
-
-}
 </style>
