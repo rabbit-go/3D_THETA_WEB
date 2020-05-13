@@ -16,6 +16,8 @@ if ('ontouchstart' in window) {
 
   // 変数の初期化
   var camera, scene, renderer, video, texture, container,mesh;
+  var mouse = new THREE.Vector2();
+  var raycaster = new THREE.Raycaster();
   const width = 400;
   const height = 200;
   var fov = 60,
@@ -34,7 +36,7 @@ if ('ontouchstart' in window) {
     container = document.getElementById( 'canvas-frame' );
     video = createVideo ('textures/video4.mp4');
     texture = createVideoTexture(video);
-    
+
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, width / height, 1, 2000 );
 
@@ -55,10 +57,25 @@ if ('ontouchstart' in window) {
 
     // ドラッグ・スワイプ操作を設定
     container.addEventListener( EVENT.TOUCH_START, onDocumentMouseDown, false );
-
+    window.addEventListener(EVENT.TOUCH_MOVE, onMouseMove, false );
+    window.addEventListener(contextmenu, onMouseRightClick, false );
     // 画面のリサイズに対応
     window.addEventListener( 'resize', onWindowResize, false );
     onWindowResize( null );
+  }
+  function onMouseRightClick(event){
+    raycaster.setFromCamera( mouse, camera );
+    var intersects = raycaster.intersectObjects(scene.children);
+    console.log(intersects[0].uv);
+  }
+  function onMouseMove( event ) {
+
+    // calculate mouse position in normalized device coordinates
+    // (-1 to +1) for both components
+  
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  
   }
   function createVideo (src) {
         // video 要素を生成
