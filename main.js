@@ -157,15 +157,15 @@ window.addEventListener('resize', onResize);
 
 function onResize() {
   // サイズを取得
-  const width = width;
-  const height = height;
+  const local_width = window.innerWidth;
+  const local_height = window.innerHeight;
 
   // レンダラーのサイズを調整する
   renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(width, height);
+  renderer.setSize(local_width, local_height);
 
   // カメラのアスペクト比を正す
-  camera.aspect = width / height;
+  camera.aspect = local_width / local_height;
   camera.updateProjectionMatrix();
 }
 
