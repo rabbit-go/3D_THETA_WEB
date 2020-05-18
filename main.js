@@ -103,6 +103,7 @@ function onDocumentMouseDown( event ) {
   function render() {
     if (typeof uv !== 'undefined') {
     camera.lookAt( uvToGlobal( spehreMesh,uv,scene));
+    renderer.render( scene, camera );
     }
     else{
       lat = Math.max( - 85, Math.min( 85, lat ) );
