@@ -103,6 +103,10 @@ function onDocumentMouseDown( event ) {
     renderer.setAnimationLoop( render );
   }
   function render() {
+    const ctx=container2.getContext('2d');
+    ctx.drawImage(video, 0, 0, video.videoWidth , video.videoHeight, 0, 0, container2.width, container2.height);
+
+
     if (uv.x != 0 && uv.y != 0) {
     //camera.lookAt( );
       camera.position.x = 0;
