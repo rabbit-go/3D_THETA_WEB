@@ -106,7 +106,8 @@ function onDocumentMouseDown( event ) {
     camera.position.x =0;
     camera.position.y =0;
     camera.position.z = 0;
-    camera.lookAt( uvToGlobal( spehreMesh,uv,scene) );
+    var globalpos = uvToGlobal( spehreMesh,uv,scene) ;
+    camera.lookAt( globalpos);
     renderer.render( scene, camera );
     }
     else{
