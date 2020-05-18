@@ -21,7 +21,7 @@ if ('ontouchstart' in window) {
   lat = 0, onMouseDownLat = 0,
   phi = 0, theta = 0;
   var mouse = new THREE.Vector2();
-  var uv = new THREE.Vector2(0.5,0.5);
+  var uv = new THREE.Vector2();
   var raycaster = new THREE.Raycaster();
   init();
   animate();
