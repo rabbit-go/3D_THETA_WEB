@@ -102,14 +102,14 @@ function onDocumentMouseDown( event ) {
   }
   function render() {
     if (typeof uv !== 'undefined') {
-    //camera.lookAt( );
-    camera.position.x =1;
-    camera.position.y =1;
-    camera.position.z = 1;
-    //spehreMesh,uv,scene
-    var globalpos = uvToGlobal(0,0,0 ) ;
-    camera.lookAt( globalpos);
-    renderer.render( scene, camera );
+      //camera.lookAt( );
+      var globalpos = uvToGlobal( spehreMesh,uv,scene) ;
+      camera.position.x =-globalpos.x/100;
+      camera.position.y =-globalpos.y/100;
+      camera.position.z =-globalpos.z/100;
+      
+      camera.lookAt( 0,0,0);
+      renderer.render( scene, camera );
     }
     else{
       lat = Math.max( - 85, Math.min( 85, lat ) );
