@@ -20,6 +20,7 @@ if ('ontouchstart' in window) {
   lon = 0, onMouseDownLon = 0,
   lat = 0, onMouseDownLat = 0,
   phi = 0, theta = 0;
+  var mouse = new THREE.Vector2();
   var raycaster = new THREE.Raycaster();
   init();
   animate();
