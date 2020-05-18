@@ -140,6 +140,7 @@ function onDocumentMouseDown( event ) {
     // 要素内におけるクリック位置を計算
     uv.x =  (clickX - positionX)/clientRect.width ;
     uv.y =  (clickY - positionY)/clientRect.height;
+    console.log(uv);
     }
    ) ;
 
