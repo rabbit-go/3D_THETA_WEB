@@ -13,7 +13,7 @@ if ('ontouchstart' in window) {
 (function () {
 
   // 変数の初期化
-  var camera, scene, renderer, video, texture, container;
+  var camera, scene, renderer, video, texture, container,spehreMesh,uv;
   var fov = 60,
   isUserInteracting = false,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -39,7 +39,7 @@ if ('ontouchstart' in window) {
     // 球体を作成し、テクスチャに video を元にして生成したテクスチャを設定します
     var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
     geometry.scale( - 1, 1, 1 );
-    var mesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
+    spehreMesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
     scene.add( mesh );
 
     // レンダラーを生成
@@ -51,6 +51,7 @@ if ('ontouchstart' in window) {
     container.addEventListener( EVENT.TOUCH_START, onDocumentMouseDown, false );
     // 画面のリサイズに対応
     window.addEventListener( 'resize', onWindowResize, false );
+    window.addEventListener('contextmenu', onMouseRightClick, false );
     onWindowResize( null );
   }
 
@@ -100,14 +101,12 @@ function onDocumentMouseDown( event ) {
     renderer.setAnimationLoop( render );
   }
   function render() {
-    lat = Math.max( - 85, Math.min( 85, lat ) );
-    phi = THREE.Math.degToRad( 90 - lat );
-    theta = THREE.Math.degToRad( lon );
-    camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
-    camera.position.y = 100 * Math.cos( phi );
-    camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
-    camera.lookAt( scene.position );
-    renderer.render( scene, camera );
+    camera.lookAt( uvToGlobal( spehreMesh,uv));
   }
-
+  function onMouseRightClick(event){
+    raycaster.setFromCamera( mouse, camera );
+    var intersects = raycaster.intersectObjects(scene.children);
+    uv = intersects[0].uv;
+    console.log(intersects[0].uv);
+  }
 })();
