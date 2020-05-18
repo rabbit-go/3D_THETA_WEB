@@ -4,7 +4,7 @@
  * @returns {THREE.Vector3[]}
  */
 var uvToGlobal = function (mesh, point) {
-    mesh.uvsNeedUpdate(true);
+    mesh.geometry.uvsNeedUpdate(true);
     var a, b, c, i, uv, face, uvs, faces, vertices, matrix, matrix2, point3, result;
     result   = [];
     uvs      = mesh.geometry.faceVertexUvs[0];
