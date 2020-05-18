@@ -41,7 +41,7 @@ if ('ontouchstart' in window) {
     geometry.scale( - 1, 1, 1 );
     spehreMesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
     scene.add( spehreMesh );
-
+    spehreMesh.geometry.uvsNeedUpdate = true;
     // レンダラーを生成
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
