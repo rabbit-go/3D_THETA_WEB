@@ -21,7 +21,7 @@ if ('ontouchstart' in window) {
   lat = 0, onMouseDownLat = 0,
   phi = 0, theta = 0;
   var mouse = new THREE.Vector2();
-  var uv = new THREE.Vector2();
+  var uv = new THREE.Vector2(0.5,0.5);
   var raycaster = new THREE.Raycaster();
   init();
   animate();
@@ -103,7 +103,7 @@ function onDocumentMouseDown( event ) {
     renderer.setAnimationLoop( render );
   }
   function render() {
-    if (typeof uv !== 'undefined') {
+    if (uv.x != 0 && uv.y != 0) {
     //camera.lookAt( );
       camera.position.x = 0;
       camera.position.y = 0;
