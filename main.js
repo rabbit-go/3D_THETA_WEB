@@ -103,6 +103,10 @@ function onDocumentMouseDown( event ) {
   function render() {
     if (typeof uv !== 'undefined') {
     //camera.lookAt( uvToGlobal( spehreMesh,uv,scene));
+    camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
+      camera.position.y = 100 * Math.cos( phi );
+      camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+      camera.lookAt( scene.position );
     renderer.render( scene, camera );
     }
     else{
