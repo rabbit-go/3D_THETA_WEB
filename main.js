@@ -40,7 +40,7 @@ if ('ontouchstart' in window) {
     var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
     geometry.scale( - 1, 1, 1 );
     spehreMesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
-    scene.add( mesh );
+    scene.add( spehreMesh );
 
     // レンダラーを生成
     renderer = new THREE.WebGLRenderer();
