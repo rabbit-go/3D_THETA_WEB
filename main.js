@@ -164,7 +164,7 @@ if ('ontouchstart' in window) {
     
     // 地球は常に回転させておく
     mesh.rotation.x = lat;
-    mesh.rotation.y = phi;
+    mesh.rotation.y = lon;
     mesh.rotation.z = theta;
    
     // 原点方向を見つめる
