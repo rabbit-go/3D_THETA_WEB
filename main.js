@@ -103,10 +103,11 @@ function onDocumentMouseDown( event ) {
   function render() {
     if (typeof uv !== 'undefined') {
     //camera.lookAt( );
-    camera.position.x =0;
-    camera.position.y =0;
-    camera.position.z = 0;
-    var globalpos = uvToGlobal( spehreMesh,uv,scene) ;
+    camera.position.x =1;
+    camera.position.y =1;
+    camera.position.z = 1;
+    //spehreMesh,uv,scene
+    var globalpos = uvToGlobal(0,0,0 ) ;
     camera.lookAt( globalpos);
     renderer.render( scene, camera );
     }
