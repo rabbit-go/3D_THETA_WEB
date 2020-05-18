@@ -35,11 +35,6 @@ if ('ontouchstart' in window) {
       video.play();
     } );
 
-    var select = document.getElementById( 'video_src' );
-    select.addEventListener( 'change', function (e) {
-      video.src = select.value;
-      video.play();
-    } );
     
     // video 要素を生成
     video = document.createElement( 'video' );
