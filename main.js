@@ -102,7 +102,7 @@ function onDocumentMouseDown( event ) {
   }
   function render() {
     if (typeof uv !== 'undefined') {
-    camera.lookAt( uvToGlobal( spehreMesh,uv,scene));
+    //camera.lookAt( uvToGlobal( spehreMesh,uv,scene));
     renderer.render( scene, camera );
     }
     else{
