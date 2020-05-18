@@ -37,11 +37,10 @@ if ('ontouchstart' in window) {
     scene = new THREE.Scene();
     
     // 球体を作成し、テクスチャに video を元にして生成したテクスチャを設定します
-    var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
+    var geometry = new THREE.SphereGeometry( 500, 60, 40 );
     geometry.scale( - 1, 1, 1 );
     spehreMesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
     scene.add( spehreMesh );
-    spehreMesh.geometry.uvsNeedUpdate = true;
     // レンダラーを生成
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -101,7 +100,9 @@ function onDocumentMouseDown( event ) {
     renderer.setAnimationLoop( render );
   }
   function render() {
-    camera.lookAt( uvToGlobal( spehreMesh,uv));
+    if (typeof uv !== 'undefined') {
+    camera.lookAt( uvToGlobal( spehreMesh,uv,scene));
+    }
   }
   function onMouseRightClick(event){
     raycaster.setFromCamera( mouse, camera );

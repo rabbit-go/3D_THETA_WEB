@@ -3,7 +3,7 @@
  * @param {THREE.Vector2} point
  * @returns {THREE.Vector3[]}
  */
-var uvToGlobal = function (mesh, point) {
+var uvToGlobal = function (mesh, point,scene) {
     mesh.geometry.uvsNeedUpdate = true;
     var a, b, c, i, uv, face, uvs, faces, vertices, matrix, matrix2, point3, result;
     result   = [];
@@ -16,7 +16,7 @@ var uvToGlobal = function (mesh, point) {
     for (i = 0; i < uvs.length; i++) {
         uv   = uvs[i];
         face = faces[i];
-        if (inUV(uv, point)) {
+        if (1) {
             a = vertices[face.a].clone().applyMatrix4(mesh.matrixWorld);
             b = vertices[face.b].clone().applyMatrix4(mesh.matrixWorld);
             c = vertices[face.c].clone().applyMatrix4(mesh.matrixWorld);
