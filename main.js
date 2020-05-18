@@ -15,11 +15,7 @@ if ('ontouchstart' in window) {
 (function () {
 
   // 変数の初期化
-  var camera, scene, renderer, video, texture, container,mesh;
-  var mouse = new THREE.Vector2();
-  var raycaster = new THREE.Raycaster();
-  const width = 400;
-  const height = 200;
+  var camera, scene, renderer, video, texture, container;
   var fov = 60,
   isUserInteracting = false,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -34,83 +30,71 @@ if ('ontouchstart' in window) {
 
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
-    video = createVideo ('textures/video4.mp4');
-    texture = createVideoTexture(video);
+
+    container.addEventListener( 'click', function () {
+      video.play();
+    } );
+
+    var select = document.getElementById( 'video_src' );
+    select.addEventListener( 'change', function (e) {
+      video.src = select.value;
+      video.play();
+    } );
+    
+    // video 要素を生成
+    video = document.createElement( 'video' );
+    video.crossOrigin = 'anonymous';
+    video.loop = true;
+    video.muted = true;
+    video.src = 'textures/video4.mp4';
+    video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
+    video.setAttribute( 'playsinline', 'playsinline' );
+    video.setAttribute( 'muted', 'muted' );
+    video.play();
+
+    // video からテクスチャを生成
+    texture = new THREE.Texture( video );
+    texture.generateMipmaps = false;
+    texture.minFilter = THREE.NearestFilter;
+    texture.maxFilter = THREE.NearestFilter;
+    texture.format = THREE.RGBFormat;
+    // 動画に合わせてテクスチャを更新
+    setInterval( function () {
+      if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
+        texture.needsUpdate = true;
+      }
+    }, 1000 / 24 );
 
     // カメラを生成
-    camera = new THREE.PerspectiveCamera( 75, width / height, 1, 2000 );
+    camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
 
     // シーンを生成
     scene = new THREE.Scene();
     
-    // 球体を作成し、テクスチャに video を元にして生成したテクスチャを設定します
+    // 球体を作成し、テクスチャに video を元にして生成したテクスチャを設定します
     var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
     geometry.scale( - 1, 1, 1 );
-    mesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
+    var mesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
     scene.add( mesh );
 
     // レンダラーを生成
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( width, height );
+    renderer.setSize( window.innerWidth, window.innerHeight );
     container.appendChild( renderer.domElement );
 
     // ドラッグ・スワイプ操作を設定
     container.addEventListener( EVENT.TOUCH_START, onDocumentMouseDown, false );
-    window.addEventListener(EVENT.TOUCH_MOVE, onMouseMove, false );
-    window.addEventListener('contextmenu', onMouseRightClick, false );
+
     // 画面のリサイズに対応
     window.addEventListener( 'resize', onWindowResize, false );
     onWindowResize( null );
   }
-  function onMouseRightClick(event){
-    raycaster.setFromCamera( mouse, camera );
-    var intersects = raycaster.intersectObjects(scene.children);
-    console.log(intersects[0].uv);
-  }
-  function onMouseMove( event ) {
-
-    // calculate mouse position in normalized device coordinates
-    // (-1 to +1) for both components
-  
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-  
-  }
-  function createVideo (src) {
-        // video 要素を生成
-        const local_video = document.createElement( 'video' );
-        local_video.crossOrigin = 'anonymous';
-        local_video.loop = true;
-        local_video.muted = true;
-        local_video.src = src;
-        local_video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-        local_video.setAttribute( 'playsinline', 'playsinline' );
-        local_video.setAttribute( 'muted', 'muted' );
-        local_video.play();
-        return local_video;
-  }
-  function createVideoTexture ( local_video ) {
-        // video からテクスチャを生成
-        const local_texture = new THREE.Texture( local_video );
-        local_texture.generateMipmaps = false;
-        local_texture.minFilter = THREE.NearestFilter;
-        local_texture.maxFilter = THREE.NearestFilter;
-        local_texture.format = THREE.RGBFormat;
-        // 動画に合わせてテクスチャを更新
-        setInterval( function () {
-          if ( local_video.readyState >= local_video.HAVE_CURRENT_DATA ) {
-            local_texture.needsUpdate = true;
-          }
-        }, 1000 / 60 );
-        return local_texture;
-  }
   function onWindowResize ( event ) {
-    camera.aspect = width / height;
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize( width, height );
+    renderer.setSize( window.innerWidth, window.innerHeight );
   }
-
   function onDocumentMouseDown( event ) {
     event.preventDefault();
     if(event.clientX) {
@@ -140,14 +124,13 @@ if ('ontouchstart' in window) {
       var touchClientX = event.changedTouches[0].clientX
       var touchClientY = event.changedTouches[0].clientY
     }
-    lon = ( touchClientX - onMouseDownMouseX ) * -0.01 + onMouseDownLon;
-    lat = ( touchClientY - onMouseDownMouseY ) * -0.01 + onMouseDownLat;
+    lon = ( touchClientX - onMouseDownMouseX ) * -0.15 + onMouseDownLon;
+    lat = ( touchClientY - onMouseDownMouseY ) * -0.15 + onMouseDownLat;
   }
   function onDocumentMouseUp( event ) {
     document.removeEventListener( EVENT.TOUCH_MOVE, onDocumentMouseMove, false );
     document.removeEventListener( EVENT.TOUCH_END, onDocumentMouseUp, false );
   }
-
   function animate() {
     renderer.setAnimationLoop( render );
   }
@@ -155,41 +138,11 @@ if ('ontouchstart' in window) {
     lat = Math.max( - 85, Math.min( 85, lat ) );
     phi = THREE.Math.degToRad( 90 - lat );
     theta = THREE.Math.degToRad( lon );
-    // ラジアンに変換する
-    const radian = (10 * Math.PI) / 180;
-    // 角度に応じてカメラの位置を設定
-    camera.position.x = 1000 * Math.sin(radian);
-    camera.position.z = 1000 * Math.cos(radian);
-        
-    
-    // 地球は常に回転させておく
-    mesh.rotation.x = lat;
-    mesh.rotation.z = lon;
-    //mesh.rotation.z = theta;
-   
-    // 原点方向を見つめる
-    camera.lookAt(mesh.position);
+    camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
+    camera.position.y = 100 * Math.cos( phi );
+    camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+    camera.lookAt( scene.position );
     renderer.render( scene, camera );
-
-
-
-
   }
-  // 初期化のために実行
-onResize();
-// リサイズイベント発生時に実行
-window.addEventListener('resize', onResize);
-
-function onResize() {
-
-
-  // レンダラーのサイズを調整する
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(width, height);
-
-  // カメラのアスペクト比を正す
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-}
 
 })();
