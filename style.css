@@ -101,6 +101,16 @@ section p {
   height:200px;
 }
 
+#canvas-frame2 {
+    display: block;
+    width: 400px;
+    height: 200px;
+}
+#canvas-frame2 canvas {
+  width: 400px;
+  height:200px;
+}
+
 
 
 footer {

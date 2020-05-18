@@ -13,7 +13,7 @@ if ('ontouchstart' in window) {
 (function () {
 
   // 変数の初期化
-  var camera, scene, renderer, video, texture, container,spehreMesh,uv;
+  var camera, scene, renderer, video, texture, container,container2,spehreMesh;
   var fov = 60,
   isUserInteracting = false,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -21,6 +21,7 @@ if ('ontouchstart' in window) {
   lat = 0, onMouseDownLat = 0,
   phi = 0, theta = 0;
   var mouse = new THREE.Vector2();
+  var uv = new THREE.Vector2();
   var raycaster = new THREE.Raycaster();
   init();
   animate();
@@ -29,6 +30,7 @@ if ('ontouchstart' in window) {
 
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
+    container2 = document.getElementById( 'canvas-frame2' );
     video = createVideo ('textures/video4.mp4');
     texture = createVideoTexture(video);
     // カメラを生成
@@ -121,10 +123,28 @@ function onDocumentMouseDown( event ) {
       renderer.render( scene, camera );
     }
   }
+
+  document.getElementById( 'canvas-frame2' ).addEventListener( "click", function( event ) {
+    var clickX = event.pageX ;
+    var clickY = event.pageY ;
+  
+    // 要素の位置を取得
+    var clientRect = this.getBoundingClientRect() ;
+    var positionX = clientRect.left + window.pageXOffset ;
+    var positionY = clientRect.top + window.pageYOffset ;
+    
+    // 要素内におけるクリック位置を計算
+    uv.x =  (clickX - positionX)/width ;
+    uv.y =  (clickY - positionY)/height;
+    }
+   ) ;
+
+
   function onMouseRightClick(event){
-    raycaster.setFromCamera( mouse, camera );
+
+    /*raycaster.setFromCamera( mouse, camera );
     var intersects = raycaster.intersectObjects(scene.children);
     uv = intersects[0].uv;
-    console.log(intersects[0].uv);
+    console.log(intersects[0].uv);*/
   }
 })();
