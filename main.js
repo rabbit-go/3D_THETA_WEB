@@ -30,7 +30,6 @@ if ('ontouchstart' in window) {
     container = document.getElementById( 'canvas-frame' );
     video = createVideo ('textures/video4.mp4');
     texture = createVideoTexture(video);
-    dragInit(container);
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
 
@@ -48,7 +47,7 @@ if ('ontouchstart' in window) {
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
     container.appendChild( renderer.domElement );
-    
+
     container.addEventListener( EVENT.TOUCH_START, onDocumentMouseDown, false );
     // 画面のリサイズに対応
     window.addEventListener( 'resize', onWindowResize, false );
