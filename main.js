@@ -134,8 +134,8 @@ function onDocumentMouseDown( event ) {
     var positionY = clientRect.top + window.pageYOffset ;
     
     // 要素内におけるクリック位置を計算
-    uv.x =  (clickX - positionX)/width ;
-    uv.y =  (clickY - positionY)/height;
+    uv.x =  (clickX - positionX)/clientRect.width ;
+    uv.y =  (clickY - positionY)/clientRect.height;
     }
    ) ;
 
