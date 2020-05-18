@@ -20,7 +20,7 @@ if ('ontouchstart' in window) {
   lon = 0, onMouseDownLon = 0,
   lat = 0, onMouseDownLat = 0,
   phi = 0, theta = 0;
-
+  var raycaster = new THREE.Raycaster();
   init();
   animate();
 
@@ -32,7 +32,7 @@ if ('ontouchstart' in window) {
     texture = createVideoTexture(video);
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
-
+    
     // シーンを生成
     scene = new THREE.Scene();
     
@@ -102,6 +102,16 @@ function onDocumentMouseDown( event ) {
   function render() {
     if (typeof uv !== 'undefined') {
     camera.lookAt( uvToGlobal( spehreMesh,uv,scene));
+    }
+    else{
+      lat = Math.max( - 85, Math.min( 85, lat ) );
+      phi = THREE.Math.degToRad( 90 - lat );
+      theta = THREE.Math.degToRad( lon );
+      camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
+      camera.position.y = 100 * Math.cos( phi );
+      camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+      camera.lookAt( scene.position );
+      renderer.render( scene, camera );
     }
   }
   function onMouseRightClick(event){
