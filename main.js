@@ -140,8 +140,8 @@ if ('ontouchstart' in window) {
       var touchClientX = event.changedTouches[0].clientX
       var touchClientY = event.changedTouches[0].clientY
     }
-    lon = ( touchClientX - onMouseDownMouseX ) * -0.15 + onMouseDownLon;
-    lat = ( touchClientY - onMouseDownMouseY ) * -0.15 + onMouseDownLat;
+    lon = ( touchClientX - onMouseDownMouseX ) * -0.01 + onMouseDownLon;
+    lat = ( touchClientY - onMouseDownMouseY ) * -0.01 + onMouseDownLat;
   }
   function onDocumentMouseUp( event ) {
     document.removeEventListener( EVENT.TOUCH_MOVE, onDocumentMouseMove, false );
@@ -164,8 +164,8 @@ if ('ontouchstart' in window) {
     
     // 地球は常に回転させておく
     mesh.rotation.x = lat;
-    mesh.rotation.y = lon;
-    mesh.rotation.z = theta;
+    mesh.rotation.z = lon;
+    //mesh.rotation.z = theta;
    
     // 原点方向を見つめる
     camera.lookAt(mesh.position);
