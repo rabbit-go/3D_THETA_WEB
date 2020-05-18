@@ -37,7 +37,9 @@ var uvToGlobal = function (mesh, point,scene) {
             matrix.multiplyMatrices(matrix2, matrix);
             matrix.transpose();
             point3 = new THREE.Vector4(point.x, point.y, 0,1);
-            result.push(point3.applyMatrix4(matrix));
+            point3.applyMatrix4(matrix);
+            point3 = new THREE.Vector3(point3.x, point3.y, point3.z);
+            result.push(point3);
         }
     }
     return result;
