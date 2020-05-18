@@ -16,7 +16,7 @@ var uvToGlobal = function (mesh, point,scene) {
     for (i = 0; i < uvs.length; i++) {
         uv   = uvs[i];
         face = faces[i];
-        if (1) {
+        if (inUV(uv, point)) {
             a = vertices[face.a].clone().applyMatrix4(mesh.matrixWorld);
             b = vertices[face.b].clone().applyMatrix4(mesh.matrixWorld);
             c = vertices[face.c].clone().applyMatrix4(mesh.matrixWorld);
@@ -41,4 +41,13 @@ var uvToGlobal = function (mesh, point,scene) {
         }
     }
     return result;
+};
+var inUV = function (uv, point) {
+    var x = point.x - uv[0].x;
+    var y = point.y - uv[0].y;
+    var s = (uv[1].x - uv[0].x) * y - (uv[1].y - uv[0].y) * x > 0;
+    if ((uv[2].x - uv[0].x) * y - (uv[2].y - uv[0].y) * x > 0 === s) {
+        return false;
+    }
+    return (uv[2].x - uv[1].x) * (point.y - uv[1].y) - (uv[2].y - uv[1].y) * (point.x - uv[1].x) > 0 === s;
 };
