@@ -14,7 +14,7 @@ if ('ontouchstart' in window) {
 
   // 変数の初期化
   var camera, scene, renderer, video, texture, container,container2,spehreMesh;
-  var fov = 60,
+  var fov = 50,
   isUserInteracting = false,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
   lon = 0, onMouseDownLon = 0,
@@ -34,7 +34,7 @@ if ('ontouchstart' in window) {
     video = createVideo ('textures/nogawa.mp4');
     texture = createVideoTexture(video);
     // カメラを生成
-    camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
+    camera = new THREE.PerspectiveCamera( fov, container.offsetWidth / container.offsetHeight, 1, 2000 );
     
     // シーンを生成
     scene = new THREE.Scene();
