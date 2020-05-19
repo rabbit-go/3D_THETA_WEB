@@ -47,14 +47,14 @@ if ('ontouchstart' in window) {
     // レンダラーを生成
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( container.offsetWidth, container.offsetHeight );
     container.appendChild( renderer.domElement );
 
     container.addEventListener( EVENT.TOUCH_START, onDocumentMouseDown, false );
     // 画面のリサイズに対応
-    window.addEventListener( 'resize', onWindowResize, false );
+    //window.addEventListener( 'resize', onWindowResize, false );
     window.addEventListener('contextmenu', onMouseRightClick, false );
-    onWindowResize( null );
+   // onWindowResize( null );
   }
 
 function onDocumentMouseDown( event ) {
