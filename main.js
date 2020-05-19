@@ -31,7 +31,7 @@ if ('ontouchstart' in window) {
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
     container2 = document.getElementById( 'canvas-frame2' );
-    video = createVideo ('textures/video4.mp4');
+    video = createVideo ('textures/nogawa.mp4');
     texture = createVideoTexture(video);
     // カメラを生成
     camera = new THREE.PerspectiveCamera( 75, container.innerWidth / container.innerHeight, 1, 2000 );
