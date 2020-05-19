@@ -15,14 +15,11 @@ if ('ontouchstart' in window) {
   // 変数の初期化
   var camera, scene, renderer, video, texture, container,container2,spehreMesh;
   var fov = 50,
-  isUserInteracting = false,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
   lon = 0, onMouseDownLon = 0,
   lat = 0, onMouseDownLat = 0,
   phi = 0, theta = 0;
-  var mouse = new THREE.Vector2();
   var uv = new THREE.Vector2();
-  var raycaster = new THREE.Raycaster();
   init();
   animate();
 
@@ -31,6 +28,17 @@ if ('ontouchstart' in window) {
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
     container2 = document.getElementById( 'canvas-frame2' );
+    var select = document.getElementById( 'video_src' );
+    select.addEventListener( 'change', function (e) {
+      if(e==='video'){
+        video = createVideo('textures/nogawa.mp4');
+        texture = createVideoTexture(video);
+      }
+      else{
+        video = createVideo();
+        texture = createVideoTexture(video);
+      }
+    } );
     video = createVideo ('textures/nogawa.mp4');
     texture = createVideoTexture(video);
     // カメラを生成
@@ -89,14 +97,9 @@ function onDocumentMouseDown( event ) {
     lon = ( touchClientX - onMouseDownMouseX ) * -0.15 + onMouseDownLon;
     lat = ( touchClientY - onMouseDownMouseY ) * -0.15 + onMouseDownLat;
   }
-  function onDocumentMouseUp( event ) {
+  function onDocumentMouseUp( ) {
     document.removeEventListener( EVENT.TOUCH_MOVE, onDocumentMouseMove, false );
     document.removeEventListener( EVENT.TOUCH_END, onDocumentMouseUp, false );
-  }
-  function onWindowResize ( event ) {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
   }
 
   function animate() {
@@ -148,7 +151,7 @@ function onDocumentMouseDown( event ) {
    ) ;
 
 
-  function onMouseRightClick(event){
+  function onMouseRightClick(){
 
     /*raycaster.setFromCamera( mouse, camera );
     var intersects = raycaster.intersectObjects(scene.children);

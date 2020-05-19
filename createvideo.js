@@ -11,6 +11,35 @@ function createVideo (src) {
     local_video.play();
     return local_video;
 }
+function createVideo () {
+
+  // video 要素を生成
+  const local_video = document.createElement( 'video' );
+    /** カメラ設定 */
+    const constraints = {
+      audio: false,
+      video: {
+        width: 1280,
+        height: 720
+      }
+    };
+  
+    /**
+     * カメラを<video>と同期
+     */
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then( (stream) => {
+      local_video.src = stream;
+      local_video.onloadedmetadata = (e) => {
+        local_video.play();
+      };
+    })
+    .catch( (err) => {
+      console.log(err.name + ": " + err.message);
+    });
+
+  return local_video;
+}
 function createVideoTexture ( local_video ) {
     // video からテクスチャを生成
     const local_texture = new THREE.Texture( local_video );
