@@ -30,7 +30,7 @@ if ('ontouchstart' in window) {
     container2 = document.getElementById( 'canvas-frame2' );
     var select = document.getElementById( 'video_src' );
     select.addEventListener( 'change', function (e) {
-      if(e==='video'){
+      if(e=='video'){
         video = createVideo('textures/nogawa.mp4');
         texture = createVideoTexture(video);
         materilal.map = texture;
