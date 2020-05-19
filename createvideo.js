@@ -29,7 +29,7 @@ function createWebVideo () {
      */
     navigator.mediaDevices.getUserMedia(constraints)
     .then( (stream) => {
-      local_video.src = stream;
+      local_video.srcObject = stream;
       local_video.onloadedmetadata = (e) => {
         local_video.play();
       };

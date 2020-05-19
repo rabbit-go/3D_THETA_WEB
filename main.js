@@ -13,7 +13,7 @@ if ('ontouchstart' in window) {
 (function () {
 
   // 変数の初期化
-  var camera, scene, renderer, video, texture, container,container2,spehreMesh;
+  var camera, scene, renderer, video, texture, container,container2,spehreMesh,materilal;
   var fov = 50,
   onMouseDownMouseX = 0, onMouseDownMouseY = 0,
   lon = 0, onMouseDownLon = 0,
@@ -33,10 +33,12 @@ if ('ontouchstart' in window) {
       if(e==='video'){
         video = createVideo('textures/nogawa.mp4');
         texture = createVideoTexture(video);
+        materilal.map = texture;
       }
       else{
         video = createWebVideo();
         texture = createVideoTexture(video);
+        materilal.map = texture;
       }
     } );
     video = createVideo ('textures/nogawa.mp4');
@@ -50,7 +52,8 @@ if ('ontouchstart' in window) {
     // 球体を作成し、テクスチャに video を元にして生成したテクスチャを設定します
     var geometry = new THREE.SphereGeometry( 500, 60, 40 );
     geometry.scale( - 1, 1, 1 );
-    spehreMesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
+    materilal = new THREE.MeshBasicMaterial( { map: texture } );
+    spehreMesh = new THREE.Mesh( geometry, materilal);
     scene.add( spehreMesh );
     // レンダラーを生成
     renderer = new THREE.WebGLRenderer();
