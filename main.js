@@ -114,7 +114,8 @@ function onDocumentMouseDown( event ) {
       camera.position.z = 0;
     var globalpos = uvToGlobal( spehreMesh,uv,scene) ;
     if(globalpos.length >0){
-    camera.lookAt( globalpos[0]);
+      globalpos[0].y = -globalpos[0].y;
+    camera.lookAt(globalpos[0] );
     }
     renderer.render( scene, camera );
     }
