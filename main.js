@@ -35,7 +35,7 @@ if ('ontouchstart' in window) {
         texture = createVideoTexture(video);
       }
       else{
-       // video = createVideo();
+        video = createWebVideo();
         texture = createVideoTexture(video);
       }
     } );

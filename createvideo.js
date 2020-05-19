@@ -11,7 +11,7 @@ function createVideo (src) {
     local_video.play();
     return local_video;
 }
-function createVideo () {
+function createWebVideo () {
 
   // video 要素を生成
   const local_video = document.createElement( 'video' );
