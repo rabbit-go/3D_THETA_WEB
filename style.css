@@ -93,12 +93,12 @@ section p {
 }
 #canvas-frame {
     display: block;
-    width: 400px;
-    height: 200px;
+    width: 800px;
+    height: 400px;
 }
 #canvas-frame canvas {
-  width: 400px;
-  height:200px;
+  width: 800px;
+  height:400px;
 }
 
 #canvas-frame2 {
