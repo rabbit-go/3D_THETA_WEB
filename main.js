@@ -60,7 +60,6 @@ if ('ontouchstart' in window) {
     renderer.setSize( container.offsetWidth, container.offsetHeight );
     container.appendChild( renderer.domElement );
 
-    window.addEventListener('contextmenu', onMouseRightClick, false );
   }
 
   function animate() {
