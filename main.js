@@ -94,8 +94,15 @@ if ('ontouchstart' in window) {
     }
   }
 
-  document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_MOVE, onMouseDrag) ;
-
+  
+  document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_START, onMouseClickDown) ;
+  document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_END, onMouseClickUp) ;
+  function onMouseClickDown(event){
+    document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_MOVE, onMouseDrag) ;
+  }
+  function onMouseClickUp(event){
+    document.getElementById( 'canvas-frame2' ).removeEventListener(EVENT.TOUCH_MOVE, onMouseDrag);
+  }
 
   function onMouseDrag(event){
     var clickX = event.pageX ;
