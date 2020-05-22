@@ -98,13 +98,14 @@ if ('ontouchstart' in window) {
   document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_START, onMouseClickDown) ;
   document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_END, onMouseClickUp) ;
   function onMouseClickDown(event){
-    document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_MOVE, onMouseDrag) ;
+    calcUV(event);
+    document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_MOVE, calcUV) ;
   }
   function onMouseClickUp(event){
-    document.getElementById( 'canvas-frame2' ).removeEventListener(EVENT.TOUCH_MOVE, onMouseDrag);
+    document.getElementById( 'canvas-frame2' ).removeEventListener(EVENT.TOUCH_MOVE, calcUV);
   }
 
-  function onMouseDrag(event){
+  function calcUV(event){
     var clickX = event.pageX ;
     var clickY = event.pageY ;
   
