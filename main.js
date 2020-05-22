@@ -98,7 +98,7 @@ if ('ontouchstart' in window) {
   document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_START, onMouseClickDown) ;
   document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_END, onMouseClickUp) ;
   function onMouseClickDown(event){
-    calcUV(event);
+    calcUV_c(event,this.getBoundingClientRect());
     document.getElementById( 'canvas-frame2' ).addEventListener( EVENT.TOUCH_MOVE, calcUV) ;
   }
   function onMouseClickUp(event){
@@ -110,7 +110,22 @@ if ('ontouchstart' in window) {
     var clickY = event.pageY ;
   
     // 要素の位置を取得
-    var clientRect = this.getBoundingClientRect() ;
+    var clientRect = this.getBoundingClientRect();
+    var positionX = clientRect.left + window.pageXOffset ;
+    var positionY = clientRect.top + window.pageYOffset ;
+    
+    // 要素内におけるクリック位置を計算
+    uv.x =  (clickX - positionX)/clientRect.width ;
+    uv.y =  (clickY - positionY)/clientRect.height;
+    console.log(uv);
+
+  }
+  function calcUV_c(event,clientRect){
+    var clickX = event.pageX ;
+    var clickY = event.pageY ;
+  
+    // 要素の位置を取得
+    var clientRect = clientRect;
     var positionX = clientRect.left + window.pageXOffset ;
     var positionY = clientRect.top + window.pageYOffset ;
     
