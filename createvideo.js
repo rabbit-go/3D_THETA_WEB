@@ -41,6 +41,27 @@ function createWebVideo () {
 
   return local_video;
 }
+function createWebVideoContraints (constraints) {
+
+  // video 要素を生成
+  const local_video = document.createElement( 'video' );
+
+    /**
+     * カメラを<video>と同期
+     */
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then( (stream) => {
+      local_video.srcObject = stream;
+      local_video.onloadedmetadata = (e) => {
+        local_video.play();
+      };
+    })
+    .catch( (err) => {
+      console.log(err.name + ": " + err.message);
+    });
+
+  return local_video;
+}
 function createVideoTexture ( local_video ) {
     // video からテクスチャを生成
     const local_texture = new THREE.Texture( local_video );

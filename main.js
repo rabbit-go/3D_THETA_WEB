@@ -13,7 +13,7 @@ if ('ontouchstart' in window) {
 (function () {
 
   // 変数の初期化
-  var camera, scene, renderer, video, texture, container,container2,spehreMesh,materilal;
+  var camera, scene, renderer, video, texture, container,container2,spehreMesh,materilal,local_constraints;
   var fov = 50,
   lon = 0, 
   lat = 0, 
@@ -23,7 +23,7 @@ if ('ontouchstart' in window) {
   animate();
 
   function init() {
-
+    cameraInit();
     // コンテナの準備
     container = document.getElementById( 'canvas-frame' );
     container2 = document.getElementById( 'canvas-frame2' );
@@ -35,7 +35,12 @@ if ('ontouchstart' in window) {
         materilal.map = texture;
       }
       else{
+        if(!local_constraints){
         video = createWebVideo();
+        }
+        else{
+        video = createWebVideoContraints(local_constraints);
+        }
         texture = createVideoTexture(video);
         materilal.map = texture;
       }
@@ -74,6 +79,44 @@ if ('ontouchstart' in window) {
         }); 
       }
   }
+  var list,names;
+  function cameraInit(){
+    navigator.mediaDevices.enumerateDevices()
+    .then(function(devices) {
+      list = devices;
+      names = list.filter(y=>y.kind == 'videoinput').map(x=>x.label);
+
+      var select = document.getElementById("camera_name");
+      let count = 0;
+      for (const name of names) {
+        count++;
+      // optionタグを作成する
+      var option = document.createElement('video'+count);
+      // optionタグのテキストを4に設定する
+      option.text = name;
+      // selectタグの子要素にoptionタグを追加する
+      select.appendChild(option);
+      }
+    });
+    const cameraName = document.getElementById("camera_name");
+    cameraName.addEventListener('change', event => {
+      const id = list.find(x=>x.label==cameraName.value);
+      local_constraints = {
+        audio: false,
+        video: {
+          width: { min: 640, ideal: 1920, max: 3840 },
+          height: { min: 480, ideal: 1080, max: 2160 },
+          deviceId: id
+        }
+      };
+      const src = document.getElementById( 'video_src' );
+      if(src.value == 'video'){
+      video = createWebVideoContraints(local_constraints);
+      texture = createVideoTexture(video);
+      materilal.map = texture;
+      }
+    }); 
+  }
   function animate() {
     renderer.setAnimationLoop( render );
   }
@@ -87,7 +130,7 @@ if ('ontouchstart' in window) {
       camera.position.x = 0;
       camera.position.y = 0;
       camera.position.z = 0;
-    var globalpos = uvToGlobal( spehreMesh,uv,scene) ;
+    var globalpos = uvToGlobal(spehreMesh,uv,scene) ;
     if(globalpos.length >0){
       globalpos[0].y = -globalpos[0].y;
     camera.lookAt(globalpos[0] );
