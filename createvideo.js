@@ -42,7 +42,6 @@ function createWebVideo () {
   return local_video;
 }
 function createWebVideoContraints (constraints) {
-
   // video 要素を生成
   const local_video = document.createElement( 'video' );
 

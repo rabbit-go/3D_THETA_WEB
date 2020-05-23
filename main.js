@@ -29,6 +29,9 @@ if ('ontouchstart' in window) {
     container2 = document.getElementById( 'canvas-frame2' );
     var select = document.getElementById( 'video_src' );
     select.addEventListener( 'change', function (e) {
+      if(video.srcObject){
+         video.srcObject.getTracks().forEach(track => track.stop());
+      }
       if(select.value=='video'){
         video = createVideo('textures/nogawa.mp4');
         texture = createVideoTexture(video);
@@ -111,6 +114,9 @@ if ('ontouchstart' in window) {
       };
       const src = document.getElementById( 'video_src' );
       if(src.value == 'camera'){
+      if(video.src){
+        video.src.stop();
+      }
       video = createWebVideoContraints(local_constraints);
       texture = createVideoTexture(video);
       materilal.map = texture;
