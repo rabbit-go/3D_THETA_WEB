@@ -110,7 +110,7 @@ if ('ontouchstart' in window) {
         }
       };
       const src = document.getElementById( 'video_src' );
-      if(src.value == 'video'){
+      if(src.value == 'camera'){
       video = createWebVideoContraints(local_constraints);
       texture = createVideoTexture(video);
       materilal.map = texture;
