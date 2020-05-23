@@ -103,6 +103,9 @@ if ('ontouchstart' in window) {
     });
     const cameraName = document.getElementById("camera_name");
     cameraName.addEventListener('change', event => {
+      if(video.srcObject){
+        video.srcObject.getTracks().forEach(track => track.stop());
+     }
       const id = list.find(x=>x.label==cameraName.value);
       local_constraints = {
         audio: false,
