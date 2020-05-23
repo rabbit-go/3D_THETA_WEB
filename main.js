@@ -42,6 +42,7 @@ if ('ontouchstart' in window) {
     } );
     video = createVideo ('textures/nogawa.mp4');
     texture = createVideoTexture(video);
+    fileLoad();
     // カメラを生成
     camera = new THREE.PerspectiveCamera( fov, container.offsetWidth / container.offsetHeight, 1, 2000 );
     
@@ -61,7 +62,18 @@ if ('ontouchstart' in window) {
     container.appendChild( renderer.domElement );
 
   }
-
+  function fileLoad(){
+    const output = document.getElementById('output');
+      if (window.FileList && window.File) {
+        document.getElementById('file-selector').addEventListener('change', event => {
+          for (const file of event.target.files) {
+            video =createVideo(window.URL.createObjectURL(file));
+            texture = createVideoTexture(video);
+            materilal.map = texture;
+          }
+        }); 
+      }
+  }
   function animate() {
     renderer.setAnimationLoop( render );
   }
@@ -111,8 +123,8 @@ if ('ontouchstart' in window) {
   
     // 要素の位置を取得
     var clientRect = this.getBoundingClientRect();
-    var positionX = clientRect.left + window.pageXOffset ;
-    var positionY = clientRect.top + window.pageYOffset ;
+    var positionX = clientRect.left + window.pageXOffset;
+    var positionY = clientRect.top + window.pageYOffset;
     
     // 要素内におけるクリック位置を計算
     uv.x =  (clickX - positionX)/clientRect.width ;
