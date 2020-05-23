@@ -92,8 +92,8 @@ if ('ontouchstart' in window) {
         count++;
       // optionタグを作成する
       var option = document.createElement('video'+count);
-      // optionタグのテキストを4に設定する
-      option.text = name;
+      option.setAttribute('value', name);
+      option.innerHTML = name;
       // selectタグの子要素にoptionタグを追加する
       select.appendChild(option);
       }
