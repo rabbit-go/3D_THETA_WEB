@@ -112,7 +112,7 @@ if ('ontouchstart' in window) {
         video: {
           width: { min: 640, ideal: 1920, max: 3840 },
           height: { min: 480, ideal: 1080, max: 2160 },
-          deviceId: id
+          deviceId: id.deviceId
         }
       };
       const src = document.getElementById( 'video_src' );
