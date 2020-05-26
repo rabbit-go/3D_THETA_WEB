@@ -19,8 +19,8 @@ function createWebVideo () {
     const constraints = {
       audio: false,
       video: {
-        width: { min: 640, ideal: 1920, max: 3840 },
-        height: { min: 480, ideal: 1080, max: 2160 },
+          width: { min: 640, ideal: 3840, max: 3840 },
+          height: { min: 480, ideal: 1920, max: 1920 },
         facingMode: "user"   // フロントカメラを利用する
       }
     };
