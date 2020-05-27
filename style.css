@@ -44,14 +44,14 @@ main {
 .display {
     display: block;
     max-width: 800px;
-    margin: 30px auto 60px;
+    margin: 0px auto 0px;
     text-align: center;
     position: relative;
 }
 .texture {
     display: block;
     max-width: 1200px;
-    margin: 0px auto 60px;
+    margin: 0px auto 20px;
     text-align: center;
     position: relative;
 }
