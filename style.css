@@ -115,7 +115,12 @@ section p {
     border-color: blue;
     width: 33.3333%; 
   }
-
+  .canvas-frame5 {
+    background-color : #f4f3f3;
+    float: left;
+    border-color: blue;
+    width: 33.3333%; 
+  }
 footer {
     text-align: center;
 }
