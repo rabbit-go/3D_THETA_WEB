@@ -102,6 +102,7 @@ section p {
   height:400px;
 }
 .canvas-frame-wrapper2 {
+    background-color : #f4f3f3;
     display: block;
     width: 1200px;
     height: 150px;
@@ -109,6 +110,7 @@ section p {
 
 
 .canvas-frame2, .canvas-frame3, .canvas-frame4 {
+    background-color : #f4f3f3;
     float: left;
     border-color: blue;
     width: 33.3333%; 
