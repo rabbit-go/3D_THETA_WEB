@@ -103,20 +103,16 @@ section p {
 }
 .canvas-frame-wrapper2 {
     display: block;
-    width: 800px;
-    height: 400px;
-}
-#canvas-frame2 {
-    display: block;
-    width: 400px;
+    width: 1200px;
     height: 200px;
 }
-#canvas-frame2 canvas {
-  width: 400px;
-  height:200px;
-}
 
 
+.canvas-frame2, .canvas-frame3, .canvas-frame4 {
+    float: left;
+    border-color: blue;
+    width: 33.3333%; 
+  }
 
 footer {
     text-align: center;
