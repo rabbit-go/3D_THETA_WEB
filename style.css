@@ -101,14 +101,18 @@ section p {
   width: 800px;
   height:400px;
 }
-
+.canvas-frame-wrapper2 {
+    display: block;
+    width: 800px;
+    height: 400px;
+}
 #canvas-frame2 {
     display: block;
     width: 400px;
     height: 200px;
 }
 #canvas-frame2 canvas {
-  width: 800px;
+  width: 400px;
   height:200px;
 }
 
